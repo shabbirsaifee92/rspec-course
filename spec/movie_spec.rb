@@ -33,6 +33,7 @@ class Movie
       actor.act
       actor.fall_off_ladder
       actor.light_on_fire
+      actor.act
     end
   end
 end
@@ -59,7 +60,13 @@ RSpec.describe Movie do
       expect(fake_actor).to receive(:light_on_fire)
       subject.start_shooting
     end
+
+    it 'expects actor to act 2 times' do
+      expect(fake_actor).to receive(:light_on_fire).once
+      expect(fake_actor).to receive(:fall_off_ladder).at_most(1).times
+      expect(fake_actor).to receive(:act).exactly(2).times
+      
+      subject.start_shooting
+    end
   end
-
-
 end
